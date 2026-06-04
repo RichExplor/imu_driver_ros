@@ -25,8 +25,8 @@ find_package(Eigen3 REQUIRED)
 
 # include directories
 include_directories(
-  "include"
   "src"
+  "include"
   ${catkin_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIR}
@@ -62,14 +62,14 @@ add_executable(imu_ros_publisher
   ${ALGORITHM_SOURCES}
 )
 
-add_dependencies(imu_ros_publisher
-  ${PROJECT_NAME}_EXPORTED_TARGETS
-  ${catkin_EXPORTED_TARGETS}
-)
-
 target_compile_features(imu_ros_publisher PUBLIC cxx_std_14)
 
 target_link_libraries(imu_ros_publisher
   ${catkin_LIBRARIES}
   ${Boost_LIBRARIES}
+)
+
+add_dependencies(imu_ros_publisher
+  ${PROJECT_NAME}_EXPORTED_TARGETS
+  ${catkin_EXPORTED_TARGETS}
 )
