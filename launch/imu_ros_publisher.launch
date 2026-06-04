@@ -1,0 +1,38 @@
+<launch>
+  <node pkg="imu_driver_ros" type="imu_ros_publisher" name="imu_ros_publisher" output="screen">
+
+  <!-- 串口设备与波特率 -->
+  <param name="port" value="/dev/ttyUSB0"/>
+  <param name="baud" type="int" value="115200"/>
+
+  <!-- 串口读取超时（毫秒），0 表示阻塞 -->
+  <param name="timeout_ms" type="int" value="100"/>
+
+  <!-- 是否发布自定义 ImuData 消息（默认 true） -->
+  <param name="publish_custom" type="bool" value="false"/>
+
+  <!-- 是否发布 sensor_msgs/Imu 与 sensor_msgs/MagneticField（默认 false） -->
+  <param name="publish_sensor_msgs" type="bool" value="true"/>
+
+  <!-- 坐标系 ID -->
+  <param name="frame_id" value="imu_link"/>
+
+  <!-- ==================== 姿态解算参数 ==================== -->
+
+  <!-- 是否启用姿态解算（默认 true） -->
+  <param name="enable_attitude_estimation" type="bool" value="true"/>
+
+  <!-- 算法类型：complementary（互补滤波）或 rk4（四阶龙格库塔） -->
+  <param name="algorithm_type" value="complementary"/>
+
+  <!-- 轴数模式：6（6轴：加速度计+陀螺仪）或 9（9轴：加速度计+陀螺仪+磁力计） -->
+  <param name="axis_mode" value="9"/>
+
+  <!-- 加速度计融合/修正系数（0~1），越大越信任加速度计，默认 0.02 -->
+  <param name="alpha_acc" type="double" value="0.02"/>
+
+  <!-- 磁力计融合/修正系数（0~1），越大越信任磁力计，默认 0.01 -->
+  <param name="alpha_mag" type="double" value="0.01"/>
+
+  </node>
+</launch>
