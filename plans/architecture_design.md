@@ -48,9 +48,9 @@ graph TD
 
     C -- 原始字节流 --> D
     D -- ImuRawData --> E
-    E -- ROS 消息 --> P1[~/imu/data_serial]
-    E -- ROS 消息 --> P2[~/imu/data_raw]
-    E -- ROS 消息 --> P3[~/imu/mag]
+    E -- ROS 消息 --> P1[/a0110e/imu/data_serial]
+    E -- ROS 消息 --> P2[/a0110e/imu/data_raw]
+    E -- ROS 消息 --> P3[/a0110e/imu/mag]
 ```
 
 ### 2.2 数据流图
@@ -597,9 +597,9 @@ IMU_ROS_Driver/
 
 | 话题 | 消息类型 | 发布条件 | QoS 队列 |
 |------|----------|----------|----------|
-| `~/imu/data_serial` | `imu_ros_driver/ImuData` | `publish_custom=true` | 1 |
-| `~/imu/data_raw` | `sensor_msgs/Imu` | `publish_sensor_msgs=true` | 10 |
-| `~/imu/mag` | `sensor_msgs/MagneticField` | `publish_sensor_msgs=true` | 10 |
+| `/a0110e/imu/data_serial` | `imu_ros_driver/ImuData` | `publish_custom=true` | 1 |
+| `/a0110e/imu/data_raw` | `sensor_msgs/Imu` | `publish_sensor_msgs=true` | 10 |
+| `/a0110e/imu/mag` | `sensor_msgs/MagneticField` | `publish_sensor_msgs=true` | 10 |
 
 ### 5.2 自定义消息 ImuData
 

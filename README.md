@@ -85,9 +85,9 @@ rosrun imu_ros_driver imu_ros_publisher _port:=/dev/ttyUSB0 _baud:=115200
 
 | 话题 | 消息类型 | 发布条件 | 队列 |
 |------|----------|----------|------|
-| `~/imu/data_serial` | `imu_ros_driver/ImuData` | `publish_custom=true` | 1 |
-| `~/imu/data_raw` | `sensor_msgs/Imu` | `publish_sensor_msgs=true` | 10 |
-| `~/imu/mag` | `sensor_msgs/MagneticField` | `publish_sensor_msgs=true` | 10 |
+| `/a0110e/imu/data_serial` | `imu_ros_driver/ImuData` | `publish_custom=true` | 1 |
+| `/a0110e/imu/data_raw` | `sensor_msgs/Imu` | `publish_sensor_msgs=true` | 10 |
+| `/a0110e/imu/mag` | `sensor_msgs/MagneticField` | `publish_sensor_msgs=true` | 10 |
 
 ## 消息格式
 
