@@ -7,28 +7,20 @@
 #include <memory>
 #include <ros/ros.h>
 
-/// @brief IMU 驱动顶层节点，组合串口、解析、姿态解算、发布四个模块
 class ImuDriverNode {
 public:
   /// @brief 构造函数
-  /// @param nh 私有节点句柄
   ImuDriverNode(ros::NodeHandle& nh);
 
-  /// @brief 初始化串口等资源
-  /// @return 成功返回 true
   bool Init();
 
-  /// @brief 主循环（阻塞），持续读取串口并发布消息
   void Run();
 
-  /// @brief 关闭资源
   void Shutdown();
 
 private:
-  /// @brief 从参数服务器读取所有参数
   void loadParams();
 
-  /// @brief 发布诊断日志（每 5 秒一次）
   void publishDiagnostics();
 
 private:

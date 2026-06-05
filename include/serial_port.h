@@ -16,14 +16,10 @@ public:
 
   ~SerialPort();
 
-  /// @brief 打开串口
-  /// @return 成功返回 true
   bool Open();
 
-  /// @brief 关闭串口
   void Close();
 
-  /// @brief 串口是否已打开
   bool IsOpen() const;
 
   /// @brief 带超时的同步读取

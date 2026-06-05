@@ -18,22 +18,17 @@ void RK4Integration::Update(double gx, double gy, double gz, double ax, double a
 }
 
 void RK4Integration::Update(const Eigen::Vector3d& gyro, const Eigen::Vector3d& accel, double dt) {
-  // 1. RK4 四元数积分
   rk4Step(gyro, dt);
 
-  // 2. 加速度计修正 roll/pitch
   correctWithAccel(accel);
 }
 
 void RK4Integration::Update(const Eigen::Vector3d& gyro, const Eigen::Vector3d& accel, const Eigen::Vector3d& mag,
                             double dt) {
-  // 1. RK4 四元数积分
   rk4Step(gyro, dt);
 
-  // 2. 加速度计修正 roll/pitch
   correctWithAccel(accel);
 
-  // 3. 磁力计修正 yaw（仅 9 轴模式）
   if (mode_ == AxisMode::NINE_AXIS) {
     correctWithMag(mag);
   }
@@ -97,26 +92,20 @@ void RK4Integration::correctWithAccel(const Eigen::Vector3d& accel) {
 }
 
 void RK4Integration::correctWithMag(const Eigen::Vector3d& mag) {
-  // 归一化磁力计测量值
   double norm = mag.norm();
   if (norm < 1e-10)
     return;
   Eigen::Vector3d m_norm = mag / norm;
 
-  // 将磁力计测量值从机体系转到参考系
   Eigen::Vector3d mag_ref = QuaternionUtils::InverseRotateVector(q_, m_norm);
 
-  // 在水平面上投影
   double bx = std::sqrt(mag_ref.x() * mag_ref.x() + mag_ref.y() * mag_ref.y());
   double bz = mag_ref.z();
 
-  // 参考磁场方向在机体系的表示
   Eigen::Vector3d mag_body = QuaternionUtils::RotateVector(q_, Eigen::Vector3d(bx, 0.0, bz));
 
-  // 计算误差
   Eigen::Vector3d error = m_norm.cross(mag_body);
 
-  // 互补修正
   double factor = alpha_mag_ * 0.5;
   q_.x() += factor * error.x();
   q_.y() += factor * error.y();

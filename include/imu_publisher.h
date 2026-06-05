@@ -1,18 +1,14 @@
 #pragma once
 
 #include "algorithm/attitude_estimator.h"
-#include "imu_parser.h"
 #include "imu_driver_ros/ImuData.h"
+#include "imu_parser.h"
 #include <Eigen/Dense>
 #include <Eigen/Geometry>
 #include <ros/ros.h>
 #include <sensor_msgs/Imu.h>
 #include <sensor_msgs/MagneticField.h>
 
-/// @brief IMU 消息发布器，管理自定义消息和标准 sensor_msgs 的发布
-///
-/// 集成姿态解算模块，支持可配置的算法类型（互补滤波/RK4）和轴数模式（6轴/9轴），
-/// 将原始 IMU 数据经过姿态解算后发布带有姿态四元数的消息。
 class ImuPublisher {
 public:
   /// @brief 构造函数
@@ -31,26 +27,13 @@ public:
 
 private:
   /// @brief 填充 sensor_msgs/Imu 的协方差矩阵
-  /// @param cov 9 元素数组
-  /// @param unknown 是否将第一个元素设为 -1（表示方向未知）
   static void fillCovariance(double cov[9], bool unknown = false);
 
   /// @brief 将原始数据转换为 SI 单位，并应用缩放系数
-  /// @param raw 输入原始数据
-  /// @param stamp 当前时间戳（用于姿态解算）
-  /// @param accel 输出线性加速度（m/s^2）
-  /// @param gyro 输出角速度（rad/s）
-  /// @param mag 输出磁场（T）
-  /// @param quat 输出姿态四元数（如果有）
   void convertRawData(const ImuRawData& raw, const ros::Time& stamp, geometry_msgs::Vector3& accel,
                       geometry_msgs::Vector3& gyro, geometry_msgs::Vector3& mag, geometry_msgs::Quaternion& quat);
 
   /// @brief 使用姿态解算器计算当前姿态四元数
-  /// @param accel 加速度计数据（m/s²，机体系）
-  /// @param gyro 陀螺仪数据（rad/s，机体系）
-  /// @param mag 磁力计数据（T，机体系）
-  /// @param orientation 输出姿态四元数
-  /// @param stamp 当前时间戳
   void attitudeEstimate(const geometry_msgs::Vector3& accel, const geometry_msgs::Vector3& gyro,
                         const geometry_msgs::Vector3& mag, geometry_msgs::Quaternion& orientation,
                         const ros::Time& stamp);
@@ -86,7 +69,6 @@ private:
   static constexpr double SCALE_NOT_DIMENSIONAL = 1e-6; // 无量纲缩放因子
 
   // 磁场强度转 Tesla：DATA * 0.001 (mGauss) -> Tesla = DATA * 0.001 * 1e-4 = DATA * 1e-7
-  // (1 mGauss = 1e-4 Tesla, 即 1e-7 T/mGauss)
   static constexpr double SCALE_MAG_STRENGTH_TO_TESLA = 1e-7;
 
   /// @brief 角度转换常量

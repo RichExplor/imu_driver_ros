@@ -6,7 +6,7 @@ namespace imu_algorithm {
 
 AttitudeEstimator::AttitudeEstimator(AlgorithmType algo, AxisMode axis_mode, double alpha_acc, double alpha_mag)
     : algo_(algo), axis_mode_(axis_mode), alpha_acc_(alpha_acc), alpha_mag_(alpha_mag) {
-  // 根据算法类型创建对应的滤波器实例
+
   if (algo_ == AlgorithmType::COMPLEMENTARY) {
     comp_filter_ptr_ = std::make_unique<ComplementaryFilter>(toCompAxisMode(axis_mode_), alpha_acc_, alpha_mag_);
   } else {
@@ -162,7 +162,7 @@ AttitudeEstimator::AlgorithmType AttitudeEstimator::AlgorithmFromString(const st
   if (lower == "rk4" || lower == "runge_kutta" || lower == "rungekutta") {
     return AlgorithmType::RK4;
   }
-  // 默认返回互补滤波
+
   return AlgorithmType::COMPLEMENTARY;
 }
 
@@ -174,7 +174,7 @@ AttitudeEstimator::AxisMode AttitudeEstimator::AxisModeFromString(const std::str
       lower == "6_axis") {
     return AxisMode::SIX_AXIS;
   }
-  // 默认返回 9 轴
+
   return AxisMode::NINE_AXIS;
 }
 

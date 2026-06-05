@@ -4,7 +4,6 @@
 #include <cstdint>
 #include <vector>
 
-/// @brief IMU 原始数据（解析后、缩放前）
 struct ImuRawData {
   // 原始数据均为小端 32-bit（除温度为 16-bit）
   int32_t ax, ay, az; ///< 线性加速度原始值（每轴 4 字节，Value = DATA * 1e-6 m/s^2）
@@ -36,7 +35,6 @@ struct ImuRawData {
   }
 };
 
-/// @brief IMU 二进制协议解析器（新协议：header=0x59,0x53）
 class ImuParser {
 public:
   ImuParser();

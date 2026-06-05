@@ -20,7 +20,6 @@ void ComplementaryFilter::Update(double gx, double gy, double gz, double ax, dou
 void ComplementaryFilter::Update(const Eigen::Vector3d& gyro, const Eigen::Vector3d& accel, double dt) {
   // 1. 陀螺仪积分：一阶近似 q_new = q + dq/dt * dt
   Eigen::Quaterniond dq = QuaternionUtils::Derivative(q_, gyro);
-  // 四元数加法 + 缩放：q_ += dq * dt
   q_.coeffs() += dq.coeffs() * dt;
   q_.normalize();
 
