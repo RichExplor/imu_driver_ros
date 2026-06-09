@@ -9,7 +9,7 @@
 class SerialPort {
 public:
   /// @brief 构造函数
-  /// @param port 串口设备路径，如 /dev/ttyUSB0
+  /// @param port 串口设备路径，如 /dev/ttyACM0
   /// @param baud 波特率
   /// @param timeout_ms 读取超时时间（毫秒），0 表示阻塞
   SerialPort(const std::string& port, int baud, int timeout_ms = 100);

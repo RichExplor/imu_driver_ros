@@ -10,7 +10,7 @@ ImuDriverNode::ImuDriverNode(ros::NodeHandle& nh)
 
 void ImuDriverNode::loadParams() {
   // 串口参数
-  nh_.param<std::string>("port", port_, "/dev/ttyUSB0");
+  nh_.param<std::string>("port", port_, "/dev/ttyACM0");
   nh_.param<int>("baud", baud_, 115200);
   nh_.param<int>("timeout_ms", timeout_ms_, 100);
 

@@ -6,15 +6,15 @@ ImuPublisher::ImuPublisher(ros::NodeHandle& nh, bool publish_custom, bool publis
       estimator_ptr_(estimator), first_frame_(true) {
 
   if (publish_custom_) {
-    pub_custom_ = nh.advertise<imu_driver_ros::ImuData>("/A0110E/imu/data_raw", 10);
-    ROS_INFO("Publishing custom ImuData on /A0110E/imu/data_raw");
+    pub_custom_ = nh.advertise<imu_driver_ros::ImuData>("/A0100E/imu/data_raw", 10);
+    ROS_INFO("Publishing custom ImuData on /A0100E/imu/data_raw");
   }
 
   if (publish_sensor_msgs) {
-    pub_imu_ = nh.advertise<sensor_msgs::Imu>("/A0110E/imu/data", 10);
-    pub_mag_ = nh.advertise<sensor_msgs::MagneticField>("/A0110E/imu/mag", 10);
-    ROS_INFO("Publishing sensor_msgs/Imu on /A0110E/imu/data, "
-             "sensor_msgs/MagneticField on /A0110E/imu/mag");
+    pub_imu_ = nh.advertise<sensor_msgs::Imu>("/A0100E/imu/data", 10);
+    pub_mag_ = nh.advertise<sensor_msgs::MagneticField>("/A0100E/imu/mag", 10);
+    ROS_INFO("Publishing sensor_msgs/Imu on /A0100E/imu/data, "
+             "sensor_msgs/MagneticField on /A0100E/imu/mag");
   }
 
   if (estimator_ptr_) {

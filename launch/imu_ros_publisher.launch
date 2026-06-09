@@ -2,7 +2,7 @@
   <node pkg="imu_driver_ros" type="imu_ros_publisher" name="imu_ros_publisher" output="screen">
 
   <!-- 串口设备与波特率 -->
-  <param name="port" value="/dev/ttyUSB0"/>
+  <param name="port" value="/dev/ttyACM0"/>
   <param name="baud" type="int" value="115200"/>
 
   <!-- 串口读取超时（毫秒），0 表示阻塞 -->

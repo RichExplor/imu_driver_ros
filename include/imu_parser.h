@@ -3,6 +3,7 @@
 #include <array>
 #include <cstdint>
 #include <vector>
+#include <cstddef>
 
 struct ImuRawData {
   // 原始数据均为小端 32-bit（除温度为 16-bit）
