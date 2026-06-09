@@ -1,4 +1,6 @@
 #include "imu_driver_node.h"
+#include "algorithm/madgwick_filter.h"
+#include "algorithm/mahony_filter.h"
 #include <ros/ros.h>
 
 ImuDriverNode::ImuDriverNode(ros::NodeHandle& nh)
@@ -17,12 +19,14 @@ void ImuDriverNode::loadParams() {
   nh_.param<bool>("publish_sensor_msgs", publish_sensor_msgs_, false);
   nh_.param<std::string>("frame_id", frame_id_, "imu_link");
 
-  // 姿态解算参数
+  // 姿态解算参数（仅支持 madgwick 与 mahony）
   nh_.param<bool>("enable_attitude_estimation", enable_attitude_estimation_, true);
-  nh_.param<std::string>("algorithm_type", algorithm_type_, "complementary");
+  nh_.param<std::string>("algorithm_type", algorithm_type_, "madgwick");
   nh_.param<std::string>("axis_mode", axis_mode_, "9");
-  nh_.param<double>("alpha_acc", alpha_acc_, 0.02);
-  nh_.param<double>("alpha_mag", alpha_mag_, 0.01);
+  nh_.param<double>("beta", beta_, 0.5);
+  nh_.param<double>("zeta", zeta_, 0.0);
+  nh_.param<double>("kp", kp_, 5.0);
+  nh_.param<double>("ki", ki_, 0.05);
 
   ROS_INFO("Parameters loaded:");
   ROS_INFO("  port = %s", port_.c_str());
@@ -34,8 +38,8 @@ void ImuDriverNode::loadParams() {
   ROS_INFO("  enable_attitude_estimation = %s", enable_attitude_estimation_ ? "true" : "false");
   ROS_INFO("  algorithm_type = %s", algorithm_type_.c_str());
   ROS_INFO("  axis_mode = %s", axis_mode_.c_str());
-  ROS_INFO("  alpha_acc = %.6f", alpha_acc_);
-  ROS_INFO("  alpha_mag = %.6f", alpha_mag_);
+  ROS_INFO("  beta = %.4f (rad/s)", beta_);
+  ROS_INFO("  zeta = %.4f", zeta_);
 }
 
 bool ImuDriverNode::Init() {
@@ -48,14 +52,24 @@ bool ImuDriverNode::Init() {
   parser_ptr_ = std::make_unique<ImuParser>();
 
   if (enable_attitude_estimation_) {
-    auto algo_type = imu_algorithm::AttitudeEstimator::AlgorithmFromString(algorithm_type_);
     auto axis_mode = imu_algorithm::AttitudeEstimator::AxisModeFromString(axis_mode_);
-    attitude_estimator_ptr_ =
-        std::make_shared<imu_algorithm::AttitudeEstimator>(algo_type, axis_mode, alpha_acc_, alpha_mag_);
 
-    ROS_INFO("Attitude estimator created: algorithm=%s, axis_mode=%s, alpha_acc=%.4f, alpha_mag=%.4f",
-             attitude_estimator_ptr_->GetAlgorithmName(), attitude_estimator_ptr_->GetAxisModeName(), alpha_acc_,
-             alpha_mag_);
+    std::string algo_lower = algorithm_type_;
+    std::transform(algo_lower.begin(), algo_lower.end(), algo_lower.begin(), ::tolower);
+
+    if (algo_lower.find("madgwick") != std::string::npos) {
+      attitude_estimator_ptr_ = std::make_shared<imu_algorithm::MadgwickFilter>(axis_mode, beta_, zeta_);
+    } else if (algo_lower.find("mahony") != std::string::npos) {
+      attitude_estimator_ptr_ = std::make_shared<imu_algorithm::MahonyFilter>(axis_mode, kp_, ki_);
+    } else {
+      ROS_WARN("Unknown algorithm '%s', defaulting to madgwick", algorithm_type_.c_str());
+      attitude_estimator_ptr_ = std::make_shared<imu_algorithm::MadgwickFilter>(axis_mode, beta_, zeta_);
+    }
+
+    ROS_INFO("Attitude estimator created: algorithm=%s, axis_mode=%s, "
+             "beta=%.4f, zeta=%.4f, kp=%.4f, ki=%.4f",
+             attitude_estimator_ptr_->GetAlgorithmName(), attitude_estimator_ptr_->GetAxisModeName(), beta_, zeta_, kp_,
+             ki_);
   } else {
     attitude_estimator_ptr_ = nullptr;
     ROS_INFO("Attitude estimation disabled, publishing raw data with identity quaternion");

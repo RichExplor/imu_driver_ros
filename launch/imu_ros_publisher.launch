@@ -22,17 +22,19 @@
   <!-- 是否启用姿态解算（默认 true） -->
   <param name="enable_attitude_estimation" type="bool" value="true"/>
 
-  <!-- 算法类型：complementary（互补滤波）或 rk4（四阶龙格库塔） -->
-  <param name="algorithm_type" value="complementary"/>
+  <!-- 算法类型：madgwick（梯度下降）或 mahony（互补滤波） -->
+  <param name="algorithm_type" value="madgwick"/>
 
   <!-- 轴数模式：6（6轴：加速度计+陀螺仪）或 9（9轴：加速度计+陀螺仪+磁力计） -->
   <param name="axis_mode" value="9"/>
 
-  <!-- 加速度计融合/修正系数（0~1），越大越信任加速度计，默认 0.02 -->
-  <param name="alpha_acc" type="double" value="0.02"/>
+  <!-- Mahony 滤波器参数 -->
+  <param name="kp" type="double" value="5.0"/>   <!-- 比例增益（越大跟踪越快，但噪声越大） -->
+  <param name="ki" type="double" value="0.05"/>  <!-- 积分增益（消除稳态零偏漂移） -->
 
-  <!-- 磁力计融合/修正系数（0~1），越大越信任磁力计，默认 0.01 -->
-  <param name="alpha_mag" type="double" value="0.01"/>
+  <!-- Madgwick 滤波器参数 -->
+  <param name="beta" type="double" value="0.35"/> <!-- 梯度下降步长 (rad/s) -->
+  <param name="zeta" type="double" value="0.01"/> <!-- 陀螺仪零偏补偿系数 -->
 
   </node>
 </launch>

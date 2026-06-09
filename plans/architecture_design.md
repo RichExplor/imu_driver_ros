@@ -48,9 +48,9 @@ graph TD
 
     C -- 原始字节流 --> D
     D -- ImuRawData --> E
-    E -- ROS 消息 --> P1[/a0110e/imu/data_serial]
-    E -- ROS 消息 --> P2[/a0110e/imu/data_raw]
-    E -- ROS 消息 --> P3[/a0110e/imu/mag]
+    E -- ROS 消息 --> P1[/A0110E/imu/data_raw]
+    E -- ROS 消息 --> P2[/A0110E/imu/data]
+    E -- ROS 消息 --> P3[/A0110E/imu/mag]
 ```
 
 ### 2.2 数据流图
@@ -382,8 +382,6 @@ flowchart TD
 | `enable_attitude_estimation` | bool | `true` | 是否启用姿态解算 |
 | `algorithm_type` | string | `complementary` | 算法类型 |
 | `axis_mode` | string | `9` | 轴数模式 |
-| `alpha_acc` | double | `0.02` | 加速度计融合系数 |
-| `alpha_mag` | double | `0.01` | 磁力计融合系数 |
 
 ---
 
@@ -597,9 +595,9 @@ IMU_ROS_Driver/
 
 | 话题 | 消息类型 | 发布条件 | QoS 队列 |
 |------|----------|----------|----------|
-| `/a0110e/imu/data_serial` | `imu_ros_driver/ImuData` | `publish_custom=true` | 1 |
-| `/a0110e/imu/data_raw` | `sensor_msgs/Imu` | `publish_sensor_msgs=true` | 10 |
-| `/a0110e/imu/mag` | `sensor_msgs/MagneticField` | `publish_sensor_msgs=true` | 10 |
+| `/A0110E/imu/data_raw` | `imu_ros_driver/ImuData` | `publish_custom=true` | 1 |
+| `/A0110E/imu/data` | `sensor_msgs/Imu` | `publish_sensor_msgs=true` | 10 |
+| `/A0110E/imu/mag` | `sensor_msgs/MagneticField` | `publish_sensor_msgs=true` | 10 |
 
 ### 5.2 自定义消息 ImuData
 

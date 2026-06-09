@@ -78,16 +78,14 @@ rosrun imu_ros_driver imu_ros_publisher _port:=/dev/ttyUSB0 _baud:=115200
 | `enable_attitude_estimation` | bool | `true` | 是否启用姿态解算 |
 | `algorithm_type` | string | `complementary` | 算法类型：`complementary`（互补滤波）或 `rk4`（四阶龙格库塔） |
 | `axis_mode` | string | `9` | 轴数模式：`6`（加速度计+陀螺仪）或 `9`（加速度计+陀螺仪+磁力计） |
-| `alpha_acc` | double | `0.02` | 加速度计融合/修正系数（0~1），越大越信任加速度计 |
-| `alpha_mag` | double | `0.01` | 磁力计融合/修正系数（0~1），越大越信任磁力计 |
 
 ## 话题
 
 | 话题 | 消息类型 | 发布条件 | 队列 |
 |------|----------|----------|------|
-| `/a0110e/imu/data_serial` | `imu_ros_driver/ImuData` | `publish_custom=true` | 1 |
-| `/a0110e/imu/data_raw` | `sensor_msgs/Imu` | `publish_sensor_msgs=true` | 10 |
-| `/a0110e/imu/mag` | `sensor_msgs/MagneticField` | `publish_sensor_msgs=true` | 10 |
+| `/A0110E/imu/data_raw` | `imu_ros_driver/ImuData` | `publish_custom=true` | 1 |
+| `/A0110E/imu/data` | `sensor_msgs/Imu` | `publish_sensor_msgs=true` | 10 |
+| `/A0110E/imu/mag` | `sensor_msgs/MagneticField` | `publish_sensor_msgs=true` | 10 |
 
 ## 消息格式
 

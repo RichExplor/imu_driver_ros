@@ -41,12 +41,14 @@ private:
   bool        publish_sensor_msgs_;
   std::string frame_id_;
 
-  // 姿态解算参数
+  // 姿态解算参数（仅保留 madgwick 与 mahony 两种算法）
   bool        enable_attitude_estimation_; ///< 是否启用姿态解算
-  std::string algorithm_type_;             ///< 算法类型："complementary" 或 "rk4"
+  std::string algorithm_type_;             ///< 算法类型："madgwick" | "mahony"
   std::string axis_mode_;                  ///< 轴数模式："6" 或 "9"
-  double      alpha_acc_;                  ///< 加速度计融合系数
-  double      alpha_mag_;                  ///< 磁力计融合系数
+  double      beta_;                       ///< Madgwick 梯度下降步长 (rad/s)
+  double      zeta_;                       ///< Madgwick 陀螺仪零偏补偿系数
+  double      kp_;                         ///< Mahony 比例增益
+  double      ki_;                         ///< Mahony 积分增益
 
   // 诊断统计
   size_t    total_frames_;
