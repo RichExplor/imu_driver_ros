@@ -1,4 +1,4 @@
-# imu_ros_driver
+# imu_driver_ros
 
 ROS 1 (roscpp) IMU 串口驱动节点：从串口读取二进制 IMU 数据，经协议解析、单位转换和姿态解算后，发布为结构化 ROS 消息。
 
@@ -56,13 +56,13 @@ source devel/setup.bash
 ### 使用 launch 启动（推荐）
 
 ```bash
-roslaunch imu_ros_driver imu_ros_publisher.launch
+roslaunch imu_driver_ros imu_ros_publisher.launch
 ```
 
 ### 使用 rosrun 启动并传参
 
 ```bash
-rosrun imu_ros_driver imu_ros_publisher _port:=/dev/ttyUSB0 _baud:=115200
+rosrun imu_driver_ros imu_ros_publisher _port:=/dev/ttyUSB0 _baud:=115200
 ```
 
 ## 参数
@@ -83,13 +83,13 @@ rosrun imu_ros_driver imu_ros_publisher _port:=/dev/ttyUSB0 _baud:=115200
 
 | 话题 | 消息类型 | 发布条件 | 队列 |
 |------|----------|----------|------|
-| `/A0110E/imu/data_raw` | `imu_ros_driver/ImuData` | `publish_custom=true` | 1 |
+| `/A0110E/imu/data_raw` | `imu_driver_ros/ImuData` | `publish_custom=true` | 1 |
 | `/A0110E/imu/data` | `sensor_msgs/Imu` | `publish_sensor_msgs=true` | 10 |
 | `/A0110E/imu/mag` | `sensor_msgs/MagneticField` | `publish_sensor_msgs=true` | 10 |
 
 ## 消息格式
 
-### `imu_ros_driver/ImuData`
+### `imu_driver_ros/ImuData`
 
 ```
 std_msgs/Header header

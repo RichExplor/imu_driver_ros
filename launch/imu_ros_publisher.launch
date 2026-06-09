@@ -26,15 +26,15 @@
   <param name="algorithm_type" value="madgwick"/>
 
   <!-- 轴数模式：6（6轴：加速度计+陀螺仪）或 9（9轴：加速度计+陀螺仪+磁力计） -->
-  <param name="axis_mode" value="9"/>
+  <param name="axis_mode" value="6"/>
 
   <!-- Mahony 滤波器参数 -->
   <param name="kp" type="double" value="5.0"/>   <!-- 比例增益（越大跟踪越快，但噪声越大） -->
   <param name="ki" type="double" value="0.05"/>  <!-- 积分增益（消除稳态零偏漂移） -->
 
   <!-- Madgwick 滤波器参数 -->
-  <param name="beta" type="double" value="0.35"/> <!-- 梯度下降步长 (rad/s) -->
-  <param name="zeta" type="double" value="0.01"/> <!-- 陀螺仪零偏补偿系数 -->
+  <param name="beta" type="double" value="0.3"/> <!-- 梯度下降步长 (rad/s) -->
+  <param name="zeta" type="double" value="0.0"/> <!-- 陀螺仪零偏补偿系数 -->
 
   </node>
 </launch>

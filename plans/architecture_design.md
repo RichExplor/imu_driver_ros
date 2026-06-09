@@ -6,7 +6,7 @@
 
 ## 1. 项目概述
 
-`imu_ros_driver` 是一个基于 ROS 1 (roscpp) 的 IMU 串口驱动节点，从串口读取二进制 IMU 数据，经过协议解析、单位转换和姿态解算后，发布为结构化的 ROS 消息。
+`imu_driver_ros` 是一个基于 ROS 1 (roscpp) 的 IMU 串口驱动节点，从串口读取二进制 IMU 数据，经过协议解析、单位转换和姿态解算后，发布为结构化的 ROS 消息。
 
 ### 1.1 核心能力
 
@@ -595,7 +595,7 @@ IMU_ROS_Driver/
 
 | 话题 | 消息类型 | 发布条件 | QoS 队列 |
 |------|----------|----------|----------|
-| `/A0110E/imu/data_raw` | `imu_ros_driver/ImuData` | `publish_custom=true` | 1 |
+| `/A0110E/imu/data_raw` | `imu_driver_ros/ImuData` | `publish_custom=true` | 1 |
 | `/A0110E/imu/data` | `sensor_msgs/Imu` | `publish_sensor_msgs=true` | 10 |
 | `/A0110E/imu/mag` | `sensor_msgs/MagneticField` | `publish_sensor_msgs=true` | 10 |
 
@@ -711,10 +711,10 @@ source devel/setup.bash
 
 ```bash
 # 使用 launch 启动（推荐）
-roslaunch imu_ros_driver imu_ros_publisher.launch
+roslaunch imu_driver_ros imu_ros_publisher.launch
 
 # 使用 rosrun 启动
-rosrun imu_ros_driver imu_ros_publisher _port:=/dev/ttyUSB0 _baud:=115200
+rosrun imu_driver_ros imu_ros_publisher _port:=/dev/ttyUSB0 _baud:=115200
 ```
 
 ### 8.3 代码格式化

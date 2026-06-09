@@ -42,9 +42,9 @@ public:
       : imu_sub_(nh_, "/imu/data", 10), mag_sub_(nh_, "/imu/mag", 10), sync_(SyncPolicy(10), imu_sub_, mag_sub_) {
     // 从参数服务器读取配置
     nh_.param<std::string>("algorithm_type", algorithm_type_, "madgwick");
-    nh_.param<std::string>("axis_mode", axis_mode_, "9");
-    nh_.param<double>("beta", beta_, 0.35);
-    nh_.param<double>("zeta", zeta_, 0.01);
+    nh_.param<std::string>("axis_mode", axis_mode_, "6");
+    nh_.param<double>("beta", beta_, 0.3);
+    nh_.param<double>("zeta", zeta_, 0.0);
     nh_.param<double>("kp", kp_, 5.0);
     nh_.param<double>("ki", ki_, 0.05);
 
