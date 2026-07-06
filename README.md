@@ -64,7 +64,7 @@ roslaunch imu_driver_ros imu_ros_publisher.launch
 
 ```bash
 source devel/setup.bash
-rosrun imu_driver_ros imu_ros_publisher _port:=/dev/ttyACM0 _baud:=115200
+rosrun imu_driver_ros imu_ros_publisher _port:=/dev/ttyACM0 _baud:=460800
 ```
 
 ## 参数
@@ -72,8 +72,8 @@ rosrun imu_driver_ros imu_ros_publisher _port:=/dev/ttyACM0 _baud:=115200
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `port` | string | `/dev/ttyACM0` | 串口设备路径 |
-| `baud` | int | `115200` | 波特率 |
-| `timeout_ms` | int | `100` | 串口读取超时（毫秒），0=阻塞（内部强制 100ms） |
+| `baud` | int | `406800` | 波特率 |
+| `timeout_ms` | int | `10` | 串口读取超时（毫秒），0=阻塞（内部强制 10ms） |
 | `publish_custom` | bool | `true` | 是否发布自定义 `ImuData` 消息 |
 | `publish_sensor_msgs` | bool | `false` | 是否发布标准 `sensor_msgs/Imu` 和 `MagneticField` |
 | `frame_id` | string | `imu_link` | TF 坐标系 ID |

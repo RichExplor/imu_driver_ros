@@ -3,10 +3,10 @@
 
   <!-- 串口设备与波特率 -->
   <param name="port" value="/dev/ttyACM0"/>
-  <param name="baud" type="int" value="115200"/>
+  <param name="baud" type="int" value="460800"/>
 
   <!-- 串口读取超时（毫秒），0 表示阻塞 -->
-  <param name="timeout_ms" type="int" value="100"/>
+  <param name="timeout_ms" type="int" value="10"/>
 
   <!-- 是否发布自定义 ImuData 消息（默认 true） -->
   <param name="publish_custom" type="bool" value="false"/>
